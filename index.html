@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Excel 公式速查卡 Pro — 職場精英的公式武器庫，含 80+ 公式、互動範例、深色模式" />
+  <title>Excel 公式圖卡 · Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23217346'/><text x='12' y='78' font-size='72' fill='white' font-family='Arial Black,sans-serif' font-weight='900'>X</text></svg>" />
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────── -->
+  <header class="site-header">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+        <rect width="34" height="34" rx="7" fill="#217346"/>
+        <text x="5" y="26" font-size="22" fill="white" font-family="Arial Black,sans-serif" font-weight="900">X</text>
+      </svg>
+      <div class="brand-text">
+        <span class="brand-name">Excel 公式圖卡</span>
+        <span class="badge-pro">PRO</span>
+      </div>
+    </div>
+
+    <div class="search-wrap">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="搜尋公式名稱、功能描述… (Press / to focus)"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <kbd class="search-kbd" id="searchKbd">/</kbd>
+    </div>
+
+    <div class="header-actions">
+      <button id="themeToggle" class="icon-btn" title="切換深色模式" aria-label="切換深色模式">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── FILTER BAR ──────────────────────────────── -->
+  <div class="filter-bar" id="filterBar">
+    <div class="cat-scroll">
+      <nav class="categories" id="categories" role="tablist" aria-label="公式分類">
+        <button class="cat-btn active" data-cat="all"      role="tab" aria-selected="true">全部</button>
+        <button class="cat-btn" data-cat="math"     role="tab" aria-selected="false">📐 數學統計</button>
+        <button class="cat-btn" data-cat="lookup"   role="tab" aria-selected="false">🔍 查找引用</button>
+        <button class="cat-btn" data-cat="text"     role="tab" aria-selected="false">✍️ 文字處理</button>
+        <button class="cat-btn" data-cat="logic"    role="tab" aria-selected="false">⚡ 邏輯判斷</button>
+        <button class="cat-btn" data-cat="datetime" role="tab" aria-selected="false">📅 日期時間</button>
+        <button class="cat-btn" data-cat="advanced" role="tab" aria-selected="false">🚀 進階 365</button>
+        <button class="cat-btn" data-cat="combos"   role="tab" aria-selected="false">🔗 實戰組合</button>
+      </nav>
+    </div>
+    <div class="filter-pills">
+      <select id="diffFilter" aria-label="難度篩選">
+        <option value="all">所有難度</option>
+        <option value="b">入門</option>
+        <option value="i">進階</option>
+        <option value="a">高手</option>
+      </select>
+      <select id="verFilter" aria-label="版本篩選">
+        <option value="all">所有版本</option>
+        <option value="2016">2016+</option>
+        <option value="2019">2019+</option>
+        <option value="365">365 限定</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ── MAIN ───────────────────────────────────── -->
+  <main class="main-content">
+    <p class="results-meta" id="resultsMeta" aria-live="polite"></p>
+
+    <div class="card-grid" id="cardGrid" role="list"></div>
+
+    <div class="combo-grid hidden" id="comboGrid" role="list"></div>
+
+    <div class="empty-state hidden" id="emptyState" role="status">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><line x1="8" y1="11" x2="14" y2="11"/>
+      </svg>
+      <p>找不到符合的公式</p>
+      <span>試試其他關鍵字，或清除篩選條件</span>
+    </div>
+  </main>
+
+  <!-- ── TOAST ──────────────────────────────────── -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ── KEYBOARD HINT ──────────────────────────── -->
+  <div class="kbd-hint" id="kbdHint">
+    <kbd>/</kbd> 搜尋 &nbsp;·&nbsp; <kbd>Esc</kbd> 清除 &nbsp;·&nbsp; <kbd>Tab</kbd> 切換卡片 &nbsp;·&nbsp; <kbd>Enter</kbd> 複製語法
+  </div>
+
+  <script src="data/formulas.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
