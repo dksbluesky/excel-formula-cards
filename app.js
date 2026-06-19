@@ -527,6 +527,15 @@ $searchInput.addEventListener('input', () => {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(() => {
     state.search = $searchInput.value.trim();
+    // Searching should always look across the whole library, not just
+    // whatever category tab happens to still be active.
+    if (state.search && state.cat !== 'all') {
+      state.cat = 'all';
+      $cats.forEach(b => {
+        b.classList.toggle('active', b.dataset.cat === 'all');
+        b.setAttribute('aria-selected', b.dataset.cat === 'all' ? 'true' : 'false');
+      });
+    }
     render();
   }, 160);
 });
